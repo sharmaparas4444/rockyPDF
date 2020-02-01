@@ -1,0 +1,50 @@
+//@font-face {
+//  font-family: 'Khmer';
+//  src: url('/fonts/KhmerOSsys.ttf') format('truetype');
+//}
+//
+//body {
+//	font-family: 'Khmer', Helvetica, Arial, sans-serif;
+//}
+//
+//h1, h2, h3, h4, h5, h6, legend {
+//  font-family: 'Khmer', Helvetica, Arial, sans-serif;
+//}
+//
+//input, select, textarea {
+//  font-family: 'Khmer', Tahoma, sans-serif;
+//}
+
+#main {
+  .download .rollover_button a,
+  .download h2.preparing,
+  form .rollover_button button {
+    font-family: helvetica, arial, sans-serif;
+  }
+}
+body #footer {
+  font-family: helvetica, arial, sans-serif;
+}
+  
+/* review buttons */
+.review .section span.button {
+	width: 110px;
+}
+
+form ul {
+  margin-left: 0;
+}
+
+ul.flat h3 {
+  width: 130px;
+}
+
+label {
+  font-size:12px;
+}
+
+p {
+  line-height: 1.6em;
+}
+
+/* end review buttons */

@@ -1,0 +1,64 @@
+<%- @nav_class[:dashboard] = :current %>
+<%= render :partial=>"admin/shared/admin_nav" %>
+<%- publish_confirmation = 'text explainging publishing details '%>
+
+<h1>Registrant Status</h1>
+<%= form_tag  upload_registrant_statuses_admin_partners_path, method: 'post', multipart: true  do  %>
+  <%= label_tag 'geo_state', 'Select A State' %>
+  <%= select_tag 'geo_state', options_for_select(GeoState.all.collect{|s| [s.abbreviation, s.id]}), include_blank: true%>
+  <%= file_field_tag 'statuses_csv' %>
+  <%= label_tag 'statuses_csv', 'Upload Registrant Status CSV' %>
+  <%= submit_tag 'Upload' %>
+<%- end %>
+
+<%- if @status_results %>
+  <h2><%= @status_results %></h2>
+<%- end%>
+
+
+<h1>Partners</h1>
+
+<%= form_for [ :admin, @partner_zip], :url=>admin_partner_zips_path, :html => { :multipart => true }  do |f| %>
+  <%= f.file_field :zip_file %>
+  <%= f.label :zip_file, 'Upload partner-creation zip file' %>
+  <%= f.submit 'Upload' %>
+<%- end %>
+  
+<br/>
+<br/>
+<%= will_paginate @partners %>
+<br/>
+<br/>
+<table id="partners">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Organization</th>
+      <th>API Key</th>
+      <th>Whitelabeled</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <%- @partners.each do |p| %>
+      <tr class="partner-<%= p.id %>">
+        <td><%= p.id %></td>
+        <td><%= h p.name %></td>
+        <td><%= h p.organization %></td>
+        <td><%= h p.api_key %></td>
+        <td><%= p.whitelabeled? ? 'Yes' : 'No' %></td>
+        <td><%= link_to "Show", admin_partner_path(p) %></td>
+        <td><%= link_to "Preview", p.preview_custom_assets_link, target: '_blank' %></td>
+        <td><%= link_to "Publish", publish_admin_partner_path(p), method: 'post', confirm: publish_confirmation %></td>
+      </tr>
+    <%- end %>
+  </tbody>
+</table>
+<br/>
+<br/>
+<%= will_paginate @partners %>
+<br/>
+<br/>

@@ -1,0 +1,25 @@
+#main {
+  .download .rollover_button a,
+  .download h2.preparing,
+  form .rollover_button button {
+    font-family: helvetica, arial, sans-serif;
+  }
+}
+body #footer {
+  font-family: helvetica, arial, sans-serif;
+}
+
+/* "Step" label font size */
+
+#progress-bar li.progress-title {
+	font-size: 12px;
+}
+
+/* END "Step" label font size */
+
+
+/* review buttons */
+.review .section span.button {
+	width: 80px;
+}
+/* end review buttons */

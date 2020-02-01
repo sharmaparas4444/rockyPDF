@@ -1,0 +1,96 @@
+from_address:  "Rock the Vote <register@rockthevote.com>"
+pdf_host_name: 'staging.rocky.rockthevote.com'
+default_url_host: "staging.rocky.rockthevote.com"
+api_host_name: https://rtvdemo:bullwinkle@staging.rocky.rockthevote.com
+ui_url_host: "staging.rocky.rockthevote.com"
+
+
+
+hours_before_first_reminder: 0.0333
+hours_between_first_and_second_reminder: 0.0333
+hours_between_second_and_final_reminder: 0.0333
+pdf_expiration_days: .25
+minutes_before_abandoned: 5
+ui_timeout_minutes: 5
+
+states_with_online_registration:
+  - AZ
+  - CA
+  - DE
+  - DC
+  - LA
+  - MN
+  - NV
+  - WA
+  - AK
+  - AL
+  - CO
+  - CT
+  - GA
+  - FL
+  - HI
+  - ID
+  - IL
+  - IN
+  - IA
+  - ID
+  - KS
+  - KY
+  - MA
+  - MD
+  - MO
+  - NE
+  - NM
+  - NY
+  - OH
+  - OR
+  - PA
+  - RI
+  - SC
+  - TN
+  - UT
+  - VT
+  - VA
+  - WV
+  - WI
+
+
+ovr_states:
+  CA:
+    api_settings:
+      api_url: https://tst-uat-ols.sos.ca.gov/PostingEntityInterfaceService.svc
+      api_posting_entity_name: RTV
+      debug_in_ui: false
+      log_all_requests: true
+      disclosures_font_size: 12px
+      disclosures_box_height: 170px
+      web_url_base: https://tst-uat-ols.sos.ca.gov
+      disclosures_url: https://covr.cdn.sos.ca.gov/discl/
+      web_agency_key: RTV    
+      
+  PA:
+    api_settings:
+      api_url: "https://paovrwebapi.beta.votespa.com/SureOVRWebAPI/api/ovr?JSONv2&sysparm_AuthKey=<%= ENV['PA_API_KEY'] %>&sysparm_action=SETAPPLICATION&sysparm_Language=0"
+
+  VA:
+    api_settings:
+        api_url: https://externalapi.elections.virginia.gov/sandbox/
+        api_username: "RockTheVote_Sandbox"
+        api_key: <%= ENV['VA_API_KEY'] %>
+
+
+enabled_locales:
+  - en
+  - es
+  - ko
+  - tl
+  - ilo
+  - hi
+  - th
+  - vi
+  - zh
+  - ja
+  - zh-tw
+  - ur
+  - bn
+  - km

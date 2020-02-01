@@ -1,0 +1,160 @@
+---
+tl:
+  language_name: Tagalog
+  language_name_translation_instructions: Mangyaring ibigay ang pangalan ng naisaling
+    wika sa wikang ito. Halimbawa kung ikaw ay nagsasalin sa Hapon, ibigay ang salitang
+    "Hapon" (ang pangalan ng wika).
+  required: " (Kailangan)"
+  locales:
+    bn:
+      name: Bengali
+    en:
+      name: English
+    es:
+      name: Spanish
+    hi:
+      name: Hindi
+    ilo:
+      name: Ilocano
+    ja:
+      name: Japanese
+    km:
+      name: Khmer
+    ko:
+      name: Korean
+    th:
+      name: Thai
+    tl:
+      name: Tagalog
+    ur:
+      name: Urdu
+    vi:
+      name: Vietnamese
+    zh-tw:
+      name: Chinese (Traditional)
+    zh:
+      name: Chinese (Simplified)
+  activerecord:
+    attributes:
+      partner:
+        from_email: Galing sa Email
+        url: URL
+      registrant:
+        date_of_birth: Kaarawan
+        email_address: Address ng E-mail
+        first_registration: Ako ay nagpaparehistro para bumoto sa unang pagkakataon.
+        home_zip_code: Zip Code
+        us_citizen: Ako ay isang mamamayan ng Estados Unidos.
+        name_title: Titulo
+        first_name: Unang Pangalan
+        middle_name: Gitnang Pangalan
+        last_name: Apelyido
+        name_suffix: Huling Titulo
+        home_address: Address o Tirahan
+        home_unit: ! 'Unit/Lote #'
+        home_city: Lungsod
+        home_state_name: Estado
+        home_state_abbrev: Estado
+        has_mailing_address: Nakukuha ko ang aking koreo sa address na naiiba kaysa
+          nasa itaas
+        has_state_license: Mayroon akong lisensiya ng pagmamaneho o ID card ng estado.
+        will_be_18_by_election: Ako ay magiging 18 taong gulang sa susunod na halalan.
+        mailing_address: Address o Tirahan
+        mailing_unit: ! 'Unit/Lote #'
+        mailing_city: Lungsod
+        mailing_state_abbrev: Estado
+        mailing_zip_code: Zip Code
+        party: Partido
+        race: Lahi
+        state_id_number: Numero ng ID
+        phone: Telepono
+        phone_type: Tipo
+        change_of_name: Ako ay nagpalit ng aking pangalan
+        prev_name_title: Titulo
+        prev_first_name: Unang pangalan
+        prev_middle_name: Gitnang Pangalan
+        prev_last_name: Apelyido
+        prev_name_suffix: Huling Titulo
+        change_of_address: Ako ay nagbago ng aking tirahan
+        prev_address: Address o Tirahan
+        prev_unit: ! 'Unit/Lote #'
+        prev_city: Lungsod
+        prev_state_abbrev: Estado
+        prev_zip_code: Zip Code
+        opt_in_email: Tumanggap ng email
+        opt_in_sms: Tumanggap ng text na mensahe
+        attest_true: Sinuri ko ang impormasyon sa itaas, at ito ay totoo at tumpak
+          sa abot ng aking kaalaman.
+        tell_from: Galing sa
+        tell_email: Iyong email
+        tell_recipients: Mga tatanggap
+        tell_subject: Paksa
+        tell_message: Personal na Mensahe
+    errors:
+      models:
+        registrant:
+          ca_disclosures_error: Para matapos ang iyong pagrerehistro sa estado ng
+            California, dapat mong tanggapin ang mga pagbubunyag sa ibaba.
+          blank: Kailangan
+          invalid_zip: Hindi valid na ZIP
+          attributes:
+            home_zip_code:
+              invalid: Gamitin ang ZIP o ZIP + 4
+            mailing_zip_code:
+              invalid: Gamitin ang ZIP o ZIP + 4
+            prev_zip_code:
+              invalid: Gamitin ang ZIP o ZIP + 4
+            email_address:
+              invalid: Hindi valid na address
+            date_of_birth:
+              format: Kailangang MM-DD-YYYY
+            phone:
+              invalid: ! 'Kailangang ###-##-####'
+              required_if_opt_in: Kailangan kung tumatanggap ng TXT
+            attest_true:
+              accepted: Kailangan mong ipahiwatig kung ang impormasyon sa itaas ay
+                tama.
+            has_state_license:
+              inclusion: Mangyaring ipahiwatig kung mayroon kang isang valid na lisensya
+                ng estado
+      messages:
+        inclusion: ! '%{attribute} ay hindi kasama sa listahan.'
+        exclusion: ! '%{attribute} ay nakareserba.'
+        invalid: ! '%{attribute} ay hindi valid.'
+        invalid_for_pdf: ! '%{attribute} must be provided in English'
+        confirmation: ! '%{attribute} ay hindi tumutugma sa kumpirmasyon.'
+        accepted: ! '%{attribute} ay dapat na tanggapin.'
+        empty: ! '%{attribute} ay hindi maaaring walang laman.'
+        blank: ! '''%{attribute} ay hindi maaaring blangko.'
+        too_long: ! '%{attribute} ay masyadong mahaba (pinakamahaba ay % {count} na
+          titik).'
+        too_short: ! '%{attribute} ay masyadong maikli (pinakamaikli ay %{count} na
+          titik.'
+        wrong_length: ! '%{attribute} ay hindi tamang haba (dapat ay  %{count}.'
+        taken: ! '%{attribute} ay nakuha na.'
+        not_a_number: ! '%{attribute} ay hindi isang numero.'
+        greater_than: ! '%{attribute} ay dapat na mahigit kaysa %{count}.'
+        greater_than_or_equal_to: ! '%{attribute} ay dapat na mahigit kaysa o katumbas
+          ng %{count}.'
+        equal_to: ! '%{attribute} ay dapat na katumbas ng %{count}.'
+        less_than: ! '%{attribute} dapat na mas mababa kaysa %{count}.'
+        less_than_or_equal_to: ! '%{attribute} ay dapat na mas mababa o katumbas ng
+          %{count}.'
+        odd: ! '%{attribute} numero ay dapat na odd (o hindi puwedeng hatiin sa dalawa).'
+        even: ! '%{attribute} numero ay dapat na even (o puwedeng hatiin sa dalawa).'
+  authlogic:
+    error_messages:
+      login_blank: Ang Login ay hindi maaaring blangko.
+      login_not_found: Ang kumbinasyon ng Login/password ay hindi valid.
+      login_invalid: Ang Username ay kailangang gumamit lamang ng mga titik, numero,
+        puwang, at.-_ @.
+      consecutive_failed_logins_limit_exceeded: Ang limitasyon ng magkakasunod na
+        nabigong pagla-login ay nalampasan na, ang account ay hindi na gagana.
+      email_invalid: Ang email address ay hindi valid.
+      password_blank: Ang Password ay hindi maaaring blangko.
+      password_invalid: Ang kumbinasyon ng Login/Password ay hindi valid.
+      not_active: Ang iyong account ay hindi aktibo.
+      not_confirmed: Ang iyong account ay hindi nakumpirma.
+      not_approved: Ang iyong account ay hindi naaprubahan.
+      no_authentication_details: Hindi ka nagbigay ng anumang detalye para sa pagpapatunay.
+

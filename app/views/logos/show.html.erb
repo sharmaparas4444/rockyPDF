@@ -1,0 +1,40 @@
+<% content_for :subnav do -%>
+  <% @nav_class[:customize] = :current; @nav_class[:logo] = :current -%>
+  <%= render :partial => "layouts/customize_nav" %>
+<% end -%>
+<div id="upload_logo" class="customize">
+  <div class="sample">
+    <%= image_tag "partner/add_logo_sample.png" %>
+  </div>
+  <h1>Upload Your Own Logo</h1>
+  <p>Easily brand your voter registration tool by adding your logo to the header.</p>
+  <h2>Current Logo</h2>
+  <% if @partner.custom_logo? %>
+    <div class="logo">
+      <%= image_tag "#{@partner.logo.url(:header)}" %>
+    </div>
+    <%= form_for @partner, :url => partner_logo_path, :html => {:method => :delete} do |form| %>
+    <%= partner_rollover_button("deletelogo", "Delete Logo") %>
+    <% end %>
+  <% else %>
+    <div class="logo">
+      <p>your logo here</p>
+    </div>
+  <% end %>
+  <h2>Upload New Logo</h2>
+  <ul>
+    <li>Supported formats are: JPG, GIF, and PNG</li>
+    <li>Your logo will automatically be resized to 75 pixels wide by 45 pixels tall. If you can,
+        resize your logo to those dimensions first for optimum results.</li>
+  </ul>
+  <h3>Logo image</h3>
+  <% if @partner.errors[:logo].join("\n") %>
+    <ul class="error">
+      <li><%= Array(@partner.errors[:logo].join("\n")).first %></li>
+    </ul>
+  <% end %>
+  <%= form_for @partner, :url => partner_logo_path, :html => { :multipart => true } do |form| %>
+    <%= field_div form, :logo, :kind => "file", :size => 40 %>
+    <%= partner_rollover_button("uploadlogo", "Upload Logo") %>
+  <% end %>
+</div>

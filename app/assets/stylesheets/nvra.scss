@@ -1,0 +1,686 @@
+$fs: 15px;
+$table_label_fs: 0.75 * $fs;
+$table_sublabel_fs: 0.6 * $fs;
+
+$page_width: 800px;
+$page_height: 3105px;
+
+$border_color: #231f20;
+$red: #e21a2b;
+$black: #000;
+$light_black: #333;
+
+@font-face {
+	font-family: BarcodeFont;
+	src: url("data:font/truetype;charset=utf-8;base64,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")
+	
+	
+}
+
+
+table {
+	border-collapse: collapse;
+	border: 0px solid $border_color;
+	td {
+		border: 1px solid $border_color;		
+		margin-top:-1px;
+		margin-left:-1px;
+	}
+}
+
+b, strong {
+	font-weight: bold;
+}
+	
+p {
+	padding-bottom: 1em;
+	font-size: $fs;
+	line-height:1.5em;
+}
+
+
+.page {
+	width: $page_width;
+	font-size:2*$fs;
+	page-break-after:always;
+}
+
+span.smaller_prompt {
+	font-size: .6em;
+	line-height:.6em;
+}
+
+//
+//We want to use a #10 envelope and we can get them with the window to the right. 
+//The placement of the window would be 1/2" up from bottom and 7/8" from the right
+//
+//The window is 1 1/8" x 4.5". The placement is 7/8" from the right and 1/2" from the bottom.
+
+#page_mailing_address {
+  height: 1100;
+  width: 850;
+  .address {
+    display: block;
+    margin-top: 1010px; //1100 - 50 - 112.5;
+    margin-left: 350px;
+    width: 465px;
+    height: 125px;
+    border: 0px solid #000;
+    font-size: $fs;
+    line-height: 1.5 * $fs
+  }
+}
+
+#state_instructinos {
+  font-size: 1.5 * $fs;
+  line-height: 3 * $fs;
+  padding: 2 * $fs;
+  h1 {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 1em;
+  }
+}
+
+#page_1 {
+	#logo {
+		float: right;
+		width: 20%;
+		img {
+			width: 156px;
+			height: 133px;
+		}
+	}
+	h1 {
+		width:75%;
+		padding-right:5%;
+		text-transform:uppercase;
+		font-size:3.3*$fs;
+		padding-top:0;;
+		text-align:right;
+		font-weight:bold;
+	}
+	h2 {
+		width:75%;
+		padding-right:5%;
+		text-align: right;
+		font-size:2*$fs;
+		font-weight: bold;
+	}
+	p.top_paragraph {
+		width: $page_width;
+		padding-top: 1em;
+		line-height:1.25em;
+		font-size: 1.8 *$fs;
+	}
+	table#instructions_table {
+		font-size: $fs;
+		line-height:1.4em;
+		border-left:0;
+		border-right:0;
+		p {
+			padding:.5em 0;
+		}
+		td.instructions_block {
+			width: 400px;
+			border-left:0;
+			ol {
+				li {
+					margin-left:5%;
+					list-style-position: outside;
+					list-style-type: decimal;
+					padding-bottom:1em;
+					.mailer {
+						overflow: hidden;
+						padding:7px 0 0;
+						.instructions, .image {
+							float: left;
+							img {
+								width: 130px;
+							}
+						}
+						.instructions {
+							font-size: 1.2 * $fs;
+							width: 142px;
+							padding:7px 26px 0;
+						}
+					}
+				}
+			}
+		}
+		td {
+			border-right:0;
+			h4 {
+				text-transform:uppercase;
+				font-size:.7 * $fs;
+				a {
+					text-transform:none;
+				}
+			}
+			padding:2.5%;
+			.state_instructions p {
+				font-size: .6 * $fs;
+			}
+		}
+	}
+	
+	h3.bottom_title {
+		padding:.7em 0;
+		font-size: 1.6 * $fs;
+		line-height:1em;
+		text-transform:uppercase;
+		font-weight: normal;
+	}
+	
+}
+
+table.form {
+	margin-top:-1px;
+	tr {
+		overflow: hidden;
+		width:740px;
+	}
+	td {
+		overflow: hidden;
+		.value {
+			color: $black;
+			font-size:.8*$fs;
+			font-family: monospace;
+			padding-top:1px;
+			.translated_value {
+				display:inline;
+				font-size:.7*$fs;
+			}
+			&.checkboxes {
+				font-family: arial;
+				overflow: hidden;
+				font-size: .7*$fs;
+				.checkbox-col {
+					width: 49%;
+					float: left;
+					.checkbox {
+						padding:1px 1px 3px 0;
+						span {
+							margin-left:0px;
+						}
+					}
+					img {
+						padding: 0;
+						margin: 0;
+						width: 10px;
+						height: 10px;
+					}
+				}
+			}	
+			&.suffix-checkboxes {
+				margin-top:-2px;
+				font-size: .65* $fs;
+				.checkbox-col {
+					.checkbox {
+						padding: 0 5px 1px 0;
+					}
+					img {
+						width: 8px;
+						height: 8px;
+					}
+				}
+			}		
+		}
+		.label, .sublabel {
+			padding-left:3px
+		}
+	}
+}
+
+#page_2 {
+	h1.title {
+		font-size:1.8 * $fs;
+		font-weight:bold;
+		color: $red;
+		text-align: center;
+	}
+	h2.subtitle {
+		font-size: $fs;
+		font-weight: bold;		
+		text-align: center;
+		padding-bottom: 1em;
+		color: $light_black;
+	}
+	
+	
+	table.form {
+		width: $page_width;
+		td {
+			vertical-align: top;
+			height: 32px;
+			padding: 3px;
+			font-size: $table_label_fs;
+			color: $light_black;
+			.sublabel {
+				font-size: $table_sublabel_fs;
+			}
+		}
+		td.block_number {
+			width: 21px;
+			font-size:1.3 * $fs;
+			font-weight: bold;
+			vertical-align: middle;
+			text-align: center;
+		}
+		tr#topblock {
+			td {
+				height: 60px;
+			}
+			td.items {
+				width:469px;
+				div {
+					padding-bottom:.25em;
+					line-height: 1.4em;
+				}
+				.value {
+					padding-left:2px;
+				}
+				.item3 {
+					font-weight: bold;
+					color: $red;
+				}
+				.item4 {
+					font-size: $table_sublabel_fs;
+				}
+			}
+			&.smaller_prompts {
+				td.items {
+					div {
+						line-height:.7em;
+					}
+				}
+			}
+			
+			td.fouo {
+				width: 315px;
+			}
+		}
+		tr#block1 {
+			//width: 738
+			td.box1 {
+				width: 266px*(1/3);
+			}
+			td.box2 {
+				width: 548px*(1/3);
+			}
+			td.box3 {
+				width: 576px*(1/3);
+			}
+			td.box4 {
+				width: 570px*(1/3);
+			}
+			td.box5 {
+				width: 256px*(1/3);
+			}
+			
+		}
+		tr#block2 {
+			td.box1 {
+				width: 1155px*(1/3);
+			}
+			td.box2 {
+				width: 240px*(1/3);
+			}
+			td.box3 {
+				width: 472px*(1/3);
+			}
+			td.box4 {
+				width: 120px*(1/3);
+			}
+			td.box5 {
+				width: 229px*(1/3);
+			}
+		}
+		tr#block3 {
+			td.box1 {
+				width: 1417px*(1/3);
+			}
+			td.box2 {
+				width: 472px*(1/3);
+			}
+			td.box3 {
+				width: 120px*(1/3);
+			}
+			td.box4 {
+				width: 229px*(1/3);
+			}
+		}
+		tr#block4, tr#block7 {
+			td {height: 128px*(1/3);}
+		}
+		tr#block4 {
+			td.block4.box1 {
+				width: 625px*(1/3);
+				table {
+					border: 0;
+					td {
+						padding: 0;
+						border: 0;
+					}
+				}
+				.label {
+					width:220px*(1/3);
+				}
+				.item2, .item3, .item4 {
+					display:inline-block;
+					padding:0;
+					margin:0;
+					height: 128px*(1/3);
+					.value {
+						height: 60px*(1/3);
+						border-bottom:1px solid $border_color;
+						margin-bottom:10px*(1/3);
+						text-align: center;
+					}
+					.value, .label {
+						width: 100%;
+					}
+					.label {
+						height: .8*$fs;
+						font-size: .8*$fs;
+						line-height: 1em;
+					}
+				}
+				.item2 {
+					width:120px*(1/3);
+					text-align: left;
+				}
+				.item3 {
+					width:110px*(1/3);
+					text-align: left;
+				}
+				.item4 {
+					width:130px*(1/3);
+					text-align: left;
+				}
+			}
+			td.block5.box1 {
+				width:625px*(1/3);
+			}
+			td.block6.box1 { 
+				width: 288px;
+				.label, .sublabel {
+					display: inline-block;
+				}
+				.value {
+					height: 170px*(1/3);
+					margin:0 10px*(1/3);
+					border-bottom: 1px solid $border-color;
+				}
+			}
+		}
+		tr#block7 {
+			td.block7.box1 {
+				width:625px*(1/3);
+			}
+			td.block8.box1 {
+				width:697px*(1/3);
+			}
+		}
+		tr#block9 {
+			height: 402px*(1/3);
+			td {
+				height: 402px*(1/3);
+			}
+			td.box1 {
+				width:1100px*(1/3);
+				border-right: 0;
+				.affirmation_header {
+				}
+				ul {
+					li {
+							margin-left:40px*(1/3);
+							list-style-position: outside;
+							list-style-type: square;
+							padding-bottom:.25em;	
+							line-height:1.25em;
+					}
+				}
+				
+			}
+			td.box2 {
+				width: 1183px*(1/3);
+				border-left:0;
+				.signature_box {
+					img {
+						width:380px;
+					}
+				}
+				.please_sign {
+					text-align: right;
+					width: 785px*(1/3);
+					margin-top: -1.2em;
+					margin-bottom: .5em;
+				}
+				.signature_date {
+					position: relative;
+					div {
+						position: absolute;
+					}
+					.date {
+						left: 30px*(1/3);
+						top: 30px*(1/3);
+					}
+					.date_box {
+						left: 140px*(1/3);
+						img {
+							width: 240px;
+						}
+					}
+					.month, .day, .year {
+						top: 100px*(1/3);
+					}
+					.month {
+						left: 210px*(1/3);
+					}
+					.day {
+						left: 420px*(1/3);
+					}
+					.year {
+						left:640px*(1/3);
+					}
+				}
+        
+			}
+		}
+	}
+	
+	#table_float_wrapper {
+		overflow: hidden;
+	}
+	
+	table#table_block4_7 {
+		float: left;
+		width: 491px;
+	}
+	table#table_block6 {
+		float: left;
+		margin-left: -1px;
+		width: 310px;
+		height: 100px;
+	}
+	h4.top_half_footer {
+		color: $red;
+		font-size:$fs;
+		line-height:1.25em;
+		padding: .5em 0 .5em;
+	}
+	.bottom_half {
+		.pdf_barcode {
+			font-family: BarcodeFont;
+			float: right;
+			font-size: 3*$fs;
+		}
+		h3.bottom_half_title {
+			color: $red;
+			font-style: italic;
+			font-weight: bold;
+			font-size: 1.5 * $fs;
+			width: $page_width * .75;
+		}
+		p.block_title {
+			padding-top:1em;
+			padding-bottom:.25em;
+			line-height: 1.25em;
+			font-size: $table_label_fs;
+			padding-left: 40px*(1/3);
+			&.blockA {
+				padding-bottom: 1em;
+			}
+		}
+		table.form {
+			td {
+				height:110px*(1/3);
+			}
+			tr#blockA {
+				td.box1 {
+					width: 266px*(1/3);
+				}
+				td.box2 {
+					width: 548px*(1/3);
+				}
+				td.box3 {
+					width: 576px*(1/3);
+				}
+				td.box4 {
+					width: 570px*(1/3);
+				}
+				td.box5 {
+					width: 256px*(1/3);
+				}
+			}
+			tr#blockB {
+				td.box1 {
+					width: 1155px*(1/3);
+				}
+				td.box2 {
+					width: 240px*(1/3);
+				}
+				td.box3 {
+					width: 472px*(1/3);
+				}
+				td.box4 {
+					width: 120px*(1/3);
+				}
+				td.box5 {
+					width: 229px*(1/3);
+				}
+			}
+			tr#blockC {
+				height: 570px*(1/3);
+				td {
+					height: 570px*(1/3);
+				}
+				td.box1 {
+					width:2303px*(1/3);
+					.address_map_wrapper {
+						position: relative;
+						.address_map {
+							img {
+								width: 740px;
+							}
+						}
+						ul.instructions {
+							width: 1200px*(1/3);
+							position: absolute;
+							top: 0;
+							left: 20px*(1/3);
+							li {
+									margin-left:40px*(1/3);
+									list-style-position: outside;
+									list-style-type: square;
+									padding-bottom:.25em;	
+									line-height:1.25em;
+							}
+						}
+						.example {
+							position: absolute;
+						}
+						.label {
+							left: 20px*(1/3);
+							top: 280px*(1/3);
+							text-decoration: underline;
+						}
+						.store {
+							left: 630px*(1/3);
+							top: 365px*(1/3);
+						}
+						.school {
+							left: 175px*(1/3);
+							top:490px*(1/3);
+						}
+						.street1 {
+							left: 400px*(1/3);
+							top:330px*(1/3);
+							-webkit-transform: rotate(-90deg); 
+						}
+						.street2 {
+							left: 550px*(1/3);
+							top:430px*(1/3);
+						}
+						.north {
+							position: absolute;
+							left: 2000px*(1/3);
+							top: 20px*(1/3);
+							font-weight: bold;
+						}
+					}
+				}
+			}
+			tr#blockD {
+				td.box1 {
+					width:2303px*(1/3);
+				}
+			}
+		}
+		
+		p.blockD {
+			padding-top:.5em;
+		}
+		h4.bottom_half_footer {
+			color: $red;
+			text-align: center;
+			font-weight: bold;
+			font-size: 1.5 * $fs;
+			line-height:1.5em;
+			padding-top: .25em;
+			padding-bottom:.25em;
+		}
+	}
+}
+
+#page_3 {
+	#page_3_wrapper {
+		position: relative;
+		height: $page_height*(1/3);
+		overflow:hidden;
+		#page_3_background {
+			img {
+				width:$page_width;
+				top:0;
+			}
+		}
+		h1 {
+			width: $page_width;
+			position: absolute;
+			top: 100px*(1/3);
+			text-align:center;
+			color:white;
+			font-size: 2 * $fs;
+		}
+		#address {
+			position: absolute;
+			top: 2540px*(1/3) - (2.8 * $fs);
+			left: 450px*(1/3);
+			font-size: 1.25 * $fs;
+			.line {
+				line-height: 2.8 * $fs;
+			}
+		}		
+	}
+}

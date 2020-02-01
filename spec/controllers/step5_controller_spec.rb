@@ -1,0 +1,76 @@
+#***** BEGIN LICENSE BLOCK *****
+#
+#Version: RTV Public License 1.0
+#
+#The contents of this file are subject to the RTV Public License Version 1.0 (the
+#"License"); you may not use this file except in compliance with the License. You
+#may obtain a copy of the License at: http://www.osdv.org/license12b/
+#
+#Software distributed under the License is distributed on an "AS IS" basis,
+#WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for the
+#specific language governing rights and limitations under the License.
+#
+#The Original Code is the Online Voter Registration Assistant and Partner Portal.
+#
+#The Initial Developer of the Original Code is Rock The Vote. Portions created by
+#RockTheVote are Copyright (C) RockTheVote. All Rights Reserved. The Original
+#Code contains portions Copyright [2008] Open Source Digital Voting Foundation,
+#and such portions are licensed to you under this license by Rock the Vote under
+#permission of Open Source Digital Voting Foundation.  All Rights Reserved.
+#
+#Contributor(s): Open Source Digital Voting Foundation, RockTheVote,
+#                Pivotal Labs, Oregon State University Open Source Lab.
+#
+#***** END LICENSE BLOCK *****
+require File.expand_path(File.dirname(__FILE__) + '/../rails_helper')
+
+describe Step5Controller do
+  before(:each) do
+    Partner.any_instance.stub(:valid_api_key?).and_return(true)
+  end
+  
+  describe "#show" do
+    it "should show the step 5 input form" do
+      reg = FactoryGirl.create(:step_4_registrant)
+      get :show, :registrant_id => reg.to_param
+      assert assigns[:registrant].step_4?
+      assert_template "show"
+    end
+  end
+
+  describe "#update" do
+    before(:each) do
+      @registrant = FactoryGirl.create(:step_4_registrant)
+      @registrant.stub(:generate_pdf)
+      Registrant.stub(:find_by_param).with(anything).and_return(@registrant)
+    end
+
+    it "should update registrant and complete step 5" do
+      put :update, :registrant_id => @registrant.to_param, :registrant => FactoryGirl.attributes_for(:step_5_registrant).reject {|k,v| k == :status }
+      assert !assigns[:registrant].nil?
+      assert assigns[:registrant].complete?
+      assert_redirected_to registrant_download_url(assigns[:registrant])
+    end
+
+    it "should reject invalid input and show form again" do
+      put :update, :registrant_id => @registrant.to_param, :registrant => FactoryGirl.attributes_for(:step_5_registrant, :attest_true => false).reject {|k,v| k == :status }
+      assert assigns[:registrant].step_5?
+      assert assigns[:registrant].reload.step_4?
+      assert_template "show"
+    end
+
+    describe "completing registration" do
+      it "invokes wrap_up on registrant" do
+        @registrant.stub(:wrap_up)
+        put :update, :registrant_id => @registrant.to_param, :registrant => FactoryGirl.attributes_for(:step_5_registrant).reject {|k,v| k == :status }
+      end
+
+      it "can't submit updates twice" do
+        expect {
+          put :update, :registrant_id => @registrant.to_param, :registrant => FactoryGirl.attributes_for(:step_5_registrant).reject {|k,v| k == :status }
+          put :update, :registrant_id => @registrant.to_param, :registrant => FactoryGirl.attributes_for(:step_5_registrant).reject {|k,v| k == :status }
+        }.to raise_exception(ActiveRecord::RecordNotFound)
+      end
+    end
+  end
+end

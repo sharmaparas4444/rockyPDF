@@ -1,0 +1,71 @@
+pdf_host_name: 'register.rockthevote.com'
+api_host_name: "https://register.rockthevote.com"
+from_address: "Rock The Vote <register@rockthevote.com>"
+default_url_host: "register.rockthevote.com"
+ui_url_host: "register.rockthevote.com"
+
+
+states_with_online_registration:
+  - AZ
+  - CA
+  - DE
+  - DC
+  - LA
+  - MN
+  - NV
+  - AK
+  - AL
+  - CO
+  - CT
+  - FL
+  - GA
+  - HI
+  - IL
+  - IN
+  - IA
+  - ID
+  - KS
+  - KY
+  - MA
+  - MD
+  - MO
+  - NE
+  - NM
+  - NY
+  - OH
+  - OR
+  - PA
+  - RI
+  - SC
+  - TN
+  - UT
+  - VT
+  - VA
+  - WI
+  - WV
+
+ovr_states:
+  CA:
+    api_settings:
+      api_url: https://covrapi.sos.ca.gov/PostingEntityInterfaceService.svc
+      debug_in_ui: false
+      log_all_requests: true
+      disclosures_prechecked: true
+      web_agency_key: RTV
+      web_url_base: https://covr.sos.ca.gov
+      disclosures_url: https://covr.cdn.sos.ca.gov/discl/
+
+enabled_locales:
+  - en
+  - es
+  - ko
+  - tl
+  - ilo
+  - hi
+  - th
+  - vi
+  - zh
+  - ja
+  - zh-tw
+  - ur
+  - bn

@@ -1,0 +1,91 @@
+pdf_host_name: localhost:3001
+api_host_name: http://localhost:3001
+use_https: false
+from_address: "Rock The Vote <rocky-dev@gmail.com>"
+default_url_host: "localhost:3000"
+ui_url_host: "localhost:3000"
+
+
+hours_before_first_reminder: 0.0333
+hours_between_first_and_second_reminder: 0.0333
+hours_between_second_and_final_reminder: 0.0333
+pdf_expiration_days: .25
+
+ovr_states:
+  CA:
+    api_settings:
+      debug_in_ui: true
+      log_all_requests: true
+      disclosures_font_size: 14px
+      disclosures_prechecked: true
+  PA: 
+    api_settings:
+      api_url: "https://fake-pa-endpoint.herokuapp.com"
+  
+  VA:
+    redirect_to_online_reg_url: false
+    languages:
+      - en
+    api_settings:
+        api_url: "https://fake-va-endpoint.herokuapp.com"
+        api_key: <%= ENV['VA_API_KEY'] %>
+  WA:
+    redirect_to_online_url: true
+    languages:
+      - en
+      - es
+  MA:
+    languages:
+      - en
+  
+
+states_with_online_registration:
+  - AZ
+  - CA
+  - DC
+  - LA
+  - MN
+  - MO
+  - NV
+  - WA
+  - AK
+  - AL
+  - CO
+  - CT
+  - FL
+  - GA
+  - HI
+  - IL
+  - IN
+  - IA
+  - ID
+  - KS
+  - MD
+  - MA
+  - NE
+  - NM
+  - NY
+  - OH
+  - OR
+  - PA
+  - SC
+  - UT
+  - VT
+  - VA
+  - WV
+
+  
+  
+enabled_locales:
+  - en
+  - es
+  - ko
+  - tl
+  - ilo
+  - hi
+  - km
+  - th
+  - vi
+  - zh
+  - zh-tw
+  - ja

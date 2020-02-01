@@ -1,0 +1,123 @@
+<fieldset>
+
+  <ul class="stacked">
+    <li class="width_h">
+      <h3><%= f.label :external_tracking_snippet %></h3>
+      <%= f.text_area :external_tracking_snippet, :rows => 5 %>
+    </li>
+    <li class="width_h">
+      <h3><%= f.label :external_conversion_snippet %></h3>
+      <%= f.text_area :external_conversion_snippet, :rows => 5 %>
+    </li>
+  </ul>
+  
+</fieldset>
+
+
+
+<%- if @partner.can_be_whitelabeled? %>
+  <fieldset>
+    <legend>Whitelabeling</legend>
+    <ul class="stacked">
+      <li class="width_a">
+        <h3>
+          <%= f.label :from_email %>
+          <%- if !@partner.from_email.blank? %>
+            <strong><%= @partner.from_email_verified? ? "Verified!" : "Not Verified!"%></strong>
+          <%- end %>
+        </h3>
+        <%= field_div f, :from_email %>
+        <span class="error"><%= @partner.errors[:from_email].join("\n") %></span>
+        <span class="instructions">* Email address to send confirmation, reminder and thank-you emails from for whitelabeled partners</span>
+      </li>
+      <li class="width_a">
+        <h3><%= f.label :finish_iframe_url %></h3>
+        <%= field_div f, :finish_iframe_url %>
+        <span class="error"><%= @partner.errors[:finish_iframe_url].join("\n") %></span>
+        <span class="instructions">* URL for iFrame to show registrants on the thank you page</span>
+      </li>        
+      <li class="width_a">
+        <h3><%= f.label :registration_instructions_url %></h3>
+        <%= field_div f, :registration_instructions_url %>
+        <span class="error"><%= @partner.errors[:registration_instructions_url].join("\n") %></span>
+        <span class="instructions">* URL for web-based instructions spawned from the pdf. <br/>
+        Will replace http://www.rockthevote.com/registration/instructions/&lt;STATE&gt;-&lt;LOCALE&gt;.html
+        </span>
+      </li>        
+    </ul>
+    <br/>
+    <ul class="checkbox">
+      <li>
+        <h3>
+          <%= f.check_box :rtv_email_opt_in %>
+          <%= f.label :rtv_email_opt_in, 'Ask for RTV email opt-in' %>
+        </h3>
+      </li>
+    </ul>
+    <ul class="checkbox">
+      <li>
+        <h3>
+          <%= f.check_box :rtv_sms_opt_in %>
+          <%= f.label :rtv_sms_opt_in, 'Ask for RTV SMS opt-in' %>
+        </h3>
+      </li>
+    </ul>
+    <ul class="checkbox">
+      <li>
+        <h3>
+          <%= f.check_box :ask_for_volunteers %>
+          <%= f.label :ask_for_volunteers, 'Ask for RTV Volunteers' %>
+        </h3>
+      </li>
+    </ul>
+    <ul class="checkbox">
+      <li>
+        <h3>
+          <%= f.check_box :partner_email_opt_in %>
+          <%= f.label :partner_email_opt_in, 'Ask for partner email opt-in' %>
+        </h3>
+      </li>
+    </ul>
+    <ul class="checkbox">
+      <li>
+        <h3>
+          <%= f.check_box :partner_sms_opt_in %>
+          <%= f.label :partner_sms_opt_in, 'Ask for partner SMS opt-in' %>
+        </h3>
+      </li>
+    </ul>
+    <ul class="checkbox">
+      <li>
+        <h3>
+          <%= f.check_box :partner_ask_for_volunteers %>
+          <%= f.label :partner_ask_for_volunteers, 'Ask for partner Volunteers' %>
+        </h3>
+      </li>
+    </ul>
+    <ul class="checkbox">
+      <li>
+        <h3>
+          <%= f.check_box :whitelabeled %>
+          <%= f.label :whitelabeled, 'Whitelabeled CSS' %>
+        </h3>
+      </li>
+    </ul>
+    
+    
+    <%= render partial: 'admin/shared/custom_css' %>
+
+    <div class="whitelabeled">
+      Enter pixel tracking codes:
+      <% EmailTemplate::EMAIL_TYPES.each do |t| %>
+        <ul class="stacked email-pixel-tracking email-pixel-tracking-<%= t %>">
+          <li class="width_h">
+            <h3><%= f.label "#{t}_pixel_tracking_code" %></h3>
+            <%= f.text_field "#{t}_pixel_tracking_code" %>
+          </li>
+        </ul>
+      <%- end %>
+    </div>
+    <a name="emails"></a>
+    <%= render partial: 'admin/shared/custom_emails', locals: { prefix: "preview_" } %>
+  </fieldset>
+<% end %>

@@ -1,0 +1,150 @@
+---
+th:
+  language_name: ภาษาไทย
+  language_name_translation_instructions: ภาษาไทย
+  required: " (กรอกข้อมูลที่จำเป็นไม่ครบ)"
+  locales:
+    bn:
+      name: ภาษาเบงกาลี
+    en:
+      name: ภาษาอังกฤษ
+    es:
+      name: ภาษาสเปน
+    hi:
+      name: ภาษาฮินดี
+    ilo:
+      name: Ilocano
+    ja:
+      name: ญี่ปุ่น
+    km:
+      name: ขอม
+    ko:
+      name: เกาหลี
+    th:
+      name: ภาษาไทย
+    tl:
+      name: ตากาล็อก
+    ur:
+      name: ภาษาอิรดู
+    vi:
+      name: เวียตนาม
+    zh-tw:
+      name: ภาษาจีน (แบบดั้งเดิม)
+    zh:
+      name: จีน (ดั้งเดิม)
+  activerecord:
+    attributes:
+      partner:
+        from_email: จากอีเมล์
+        url: URL
+      registrant:
+        date_of_birth: วันเกิด
+        email_address: ที่อยู่อีเมล์
+        first_registration: ฉันลงทะเบียนเลือกตั้งเป็นครั้งแรก
+        home_zip_code: รหัสไปรษณีย์
+        us_citizen: ฉันเป็นพลเมืองของประเทศสหรัฐอเมริกา
+        name_title: คำนำหน้าชื่อ
+        first_name: ชื่อ
+        middle_name: ชื่อกลาง
+        last_name: นามสกุล
+        name_suffix: คำต่อท้ายชื่อ
+        home_address: ที่อยู่
+        home_unit: เลขที่ห้อง
+        home_city: เมือง
+        home_state_name: รัฐ
+        home_state_abbrev: รัฐ
+        has_mailing_address: ฉันได้รับจดหมายของฉันที่ที่อยู่แตกต่างจากข้างบน
+        has_state_license: ฉันมีใบขับขี่หรือบัตรประจำตัวประชาชนที่รัฐออกให้
+        will_be_18_by_election: ฉันจะมีอายุครบ 18 ปีบริบูรณ์ภายในวันเลือกตั้งครั้งต่อไป
+        mailing_address: ที่อยู่
+        mailing_unit: เลขที่ห้อง
+        mailing_city: เมือง
+        mailing_state_abbrev: รัฐ
+        mailing_zip_code: รหัสไปรษณีย์
+        party: พรรคการเมืองที่เลือก
+        race: เชื้อชาติ
+        state_id_number: เลขที่บัตรประชาชน
+        phone: หมายเลขโทรศัพท์
+        phone_type: ประเภทของโทรศัพท์
+        change_of_name: ฉันได้เปลี่ยนแปลงชื่อของฉัน
+        prev_name_title: คำนำหน้าชื่อ
+        prev_first_name: ชื่อ
+        prev_middle_name: ชื่อกลาง
+        prev_last_name: นามสกุล
+        prev_name_suffix: นามสกุล
+        change_of_address: ฉันได้มีการเปลี่ยนแปลงที่อยู่ของฉัน
+        prev_address: ที่อยู่
+        prev_unit: เลขที่ห้อง
+        prev_city: เมือง
+        prev_state_abbrev: รัฐ
+        prev_zip_code: รหัสไปรษณีย์
+        opt_in_email: ต้องการที่จะได้รับอีเมล์
+        opt_in_sms: ต้องการที่จะได้รับข้อความ
+        attest_true: ฉันได้ตรวจสอบข้อมูลข้างต้นและขอยืนยันว่าข้อมูลนี้มีความถูกต้องสมบูรณ์และเป็นความจริงทุกประการ
+        tell_from: จาก
+        tell_email: อีเมล์ของคุณ
+        tell_recipients: ผู้รับ
+        tell_subject: หัวข้อเรื่อง
+        tell_message: ข้อความส่วนตัว
+    errors:
+      models:
+        registrant:
+          ca_disclosures_error: เพื่อการส่งข้อมูลการสมัครที่เสร็จสมบูรณ์ต่อรัฐ [[state]]
+            คุณจะต้องยอมรับข้อมูลและเงื่อนไขด้านบนนี้
+          blank: กรอกข้อมูลที่จำเป็นไม่ครบ
+          invalid_zip: รหัสไปรษณีย์ไม่ถูกต้อง
+          attributes:
+            home_zip_code:
+              invalid: รหัสไปรษณีย์ หรือ รหัสไปรษณีย์+ หมายเลข 4 ตัว
+            mailing_zip_code:
+              invalid: รหัสไปรษณีย์ หรือ รหัสไปรษณีย์+ หมายเลข 4 ตัว
+            prev_zip_code:
+              invalid: รหัสไปรษณีย์ หรือ รหัสไปรษณีย์+ หมายเลข 4 ตัว
+            email_address:
+              invalid: ที่อยู่ไม่ถูกต้อง
+            date_of_birth:
+              format: ควรจะเป็น เดือน-วัน-ปี (MM-DD-YYYY)
+            phone:
+              invalid: ! 'ควรจะเป็น ###-###-####'
+              required_if_opt_in: จำเป็นต้องกรอกถ้าต้องการรับข้อความ
+            attest_true:
+              accepted: คุณต้องยืนยันว่าข้อมูลดังกล่าวถูกต้อง
+            has_state_license:
+              inclusion: กรุณาระบุว่าคุณมีบัตรประจำตัวประชาชนของรัฐที่ยังไม่หมดอายุ
+      messages:
+        inclusion: ! '%{attribute} ไม่ได้รวมอยู่ในรายการ'
+        exclusion: ! '%{attribute} ที่สงวนไว้'
+        invalid: ! '%{attribute} ไม่ถูกต้อง'
+        invalid_for_pdf: ! '%{attribute} ต้องกรอกเป็นภาษาอังกฤษ'
+        confirmation: ! '%{attribute} ไม่ตรงกับข้อมูลที่มีอยู่'
+        accepted: ! '%{attribute} จะต้องได้รับการยอมรับ'
+        empty: ! '%{attribute} ไม่สามารถปล่อยให้ว่างได้'
+        blank: ! '%{attribute} ไม่สามารถปล่อยให้ว่างได้'
+        too_long: ! '%{attribute} ยาวเกินไป (มากที่สุดได้  %{count} ตัวอักษร)'
+        too_short: ! '%{attribute} สั้นเกินไป (น้อยที่สุดได้  %{count} ตัวอักษร)'
+        wrong_length: ! '%{attribute} มีตัวอักษรไม่ครบ (ต้องมี  %{count} ตัวอักษร)'
+        taken: ! '%{attribute} ได้ใช้ไปแล้ว'
+        not_a_number: ! '%{attribute} ไม่ได้เป็นตัวเลข'
+        greater_than: ! '%{attribute} ต้องมากกว่า %{count}'
+        greater_than_or_equal_to: ! '%{attribute} ต้องมากกว่าหรือเท่ากับ %{count}'
+        equal_to: ! '%{attribute} ต้องเท่ากับ %{count}'
+        less_than: ! '%{attribute} ต้องน้อยกว่า %{count}'
+        less_than_or_equal_to: ! '%{attribute} ต้องน้อยกว่าหรือเท่ากับ %{count}'
+        odd: ! '%{attribute} ต้องเป็นเลขคี่'
+        even: ! '%{attribute} ต้องเป็นเลขคู่'
+  authlogic:
+    error_messages:
+      login_blank: ต้องใส่ล็อคอิน
+      login_not_found: ล็อคอิน / รหัสผ่านไม่ถูกต้อง
+      login_invalid: กรุณาสร้างล็อคอินโดยใช้ตัวอักษร ตัวเลข ช่องว่าง และ เครื่องหมาย
+        .-_@
+      consecutive_failed_logins_limit_exceeded: การเข้าสู่ระบบล้มเหลวติดต่อกันเกินขีดจำกัด
+        บัญชีถูกปิดใช้งาน
+      email_invalid: อีเมลไม่ถูกต้อง
+      password_blank: กรุณาใส่รหัสผ่าน
+      password_invalid: ล็อคอิน / รหัสผ่านไม่ถูกต้อง
+      not_active: บัญชีของคุณไม่ได้ใช้งาน
+      not_confirmed: บัญชีของคุณไม่ได้รับการยืนยัน
+      not_approved: บัญชีของคุณไม่ได้รับการอนุมัติ
+      no_authentication_details: คุณไม่ได้ให้รายละเอียดใด ๆ สำหรับการตรวจสอบ
+

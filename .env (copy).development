@@ -1,0 +1,28 @@
+DEPLOY_TO: "base-deploy-directory-on-app-server"
+SYMLINK_DATA_DIR: "base-symlink-directory-on-util-server"
+
+STAGING2_WEB: hostname
+STAGING2_APP: hostname
+STAGING2_UTIL: hostname
+STAGING2_DB: hostname
+
+STAGING_WEB: hostname
+STAGING_APP: hostname
+STAGING_UTIL: hostname
+STAGING_DB: hostname
+
+PRODUCTION_WEB: hostname
+PRODUCTION_APP: hostname
+PRODUCTION_UTIL: hostname
+PRODUCTION_DB: hostname
+
+AIRBRAKE_API_KEY: 'b104707aca39ece84cf110399c24c090'
+SECRET_TOKEN: 'rwerwrwerwerwerewrwerwerwerwrwer'
+
+FOG_PROVIDER: 'AWS'
+AWS_ACCESS_KEY_ID: 'AKIAZRFVNVNDCPYPJJX7'
+AWS_SECRET_ACCESS_KEY: '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'
+FOG_DIRECTORY: 'RockeyAssests'
+SQS_PRIORITY_QUEUE_URL : localhost:3000
+SQS_QUEUE_URL : localhost:4000
+

@@ -1,0 +1,35 @@
+%h2 Grommet Request Report Download:
+
+%p
+  - if Settings.grommet_csv_ready || Settings.grommet_csv_ready == nil
+    - if Settings.grommet_csv_ready
+      = link_to "Download grommet CSV report generated on #{Settings.grommet_csv_generated_at}", Settings.grommet_csv_url
+    %br 
+    = link_to "Generated new grommet request CSV report", request_report_admin_grommet_queue_path(format: :csv)
+  - else
+    Generating new grommet csv report...
+
+%h2 Delay Queue:
+
+- if @jobs.count == 0
+  %h3= "No items in queue"
+  
+%h3 
+  Current Grommet Queue Delay (in hours): 
+  = @hours_delay
+  = form_tag update_delay_admin_grommet_queue_path(:format => :csv), method: :patch do 
+    = text_field_tag :delay, @hours_delay
+    = submit_tag "Update Delay"
+    
+- if @jobs.count > 0 
+  %br
+  %br
+  %h3= link_to "Flush Queue (will also set queue delay to 0)", flush_admin_grommet_queue_path
+  %br
+  %br
+  %ul
+    - @jobs.each do |j|
+      %li
+        - h = YAML.load(j.handler)
+        = "Registrant ID: #{h.args[0]}, Run At #{j.run_at}"
+    

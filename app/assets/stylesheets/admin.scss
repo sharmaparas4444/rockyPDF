@@ -1,0 +1,47 @@
+table { font-size: 13px; }
+th, td { padding: 2px 5px; }
+th { font-weight: bold; }
+
+.actions { margin-top: 20px; }
+
+.properties .label { font-weight: bold; text-align: right; }
+
+
+
+.actions {
+  margin: 20px 0;
+}
+.actions a { padding-right: 20px; }
+
+table.assets {
+  margin-top: 50px;
+}
+
+table.assets .name {
+  width: 200px;
+}
+
+
+
+#container {
+  width: 1240px;
+}
+#header {
+  background-image: url(https://s3.amazonaws.com/rocky-assets/assets/admin/header_admin_tools.gif);
+}
+
+@import '_partner_whitelabel';
+
+table.emails {
+  margin: 1em 0 2em;
+  tr {
+    td {
+      border-top: 1px solid #ccc;
+    }
+    &:hover {
+      td {
+        background-color: #ccccff;
+      }
+    }
+  }
+}

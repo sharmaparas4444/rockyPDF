@@ -1,0 +1,7 @@
+%ul.nav
+  - I18n.available_locales.each do |lang|
+    %li
+      %span= "#{Translation.language_name(lang)}: "
+      - @types.each do |type|
+        = link_to type.name, translation_path(type, :locale=>lang)
+      = link_to "PDF Sample", preview_pdf_translation_path(lang, :format=>:pdf)

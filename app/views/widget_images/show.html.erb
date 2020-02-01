@@ -1,0 +1,27 @@
+<% content_for :subnav do -%>
+  <% @nav_class[:customize] = :current; @nav_class[:widget] = :current -%>
+  <%= render :partial => "layouts/customize_nav" %>
+<% end -%>
+
+<div class="customize">
+  <h1>Choose A Web Banner</h1>
+  <div class="text">
+    <p>
+      You can choose to embed the registration tool on your website as a banner or button. To use this feature, please select an icon below, SCROLL TO THE BOTTOM, click 'save', and use the widget or graphical button embed code.
+    </p>
+  </div>
+
+  <div id="choose_widget">
+  <%= form_for @partner, :url => partner_widget_image_path, :method => :put do |form| %>
+    <fieldset>
+    <legend>Select Widget Banner</legend>
+      <table cellspacing="0">
+        <tbody>
+          <%= render :partial => "widget", :collection => Partner::WIDGET_IMAGES, :locals => {:form => form} %>
+        </tbody>
+      </table>
+    </fieldset>
+    <%= partner_rollover_button("save", "Save") %>
+  <% end %>
+  </div>
+</div>

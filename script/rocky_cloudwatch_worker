@@ -1,0 +1,127 @@
+#!/usr/bin/env ruby
+require 'dotenv'
+Dotenv.load(File.join(File.dirname(__FILE__), '..', ".env.#{ENV['RAILS_ENV']}"))
+
+require File.expand_path(File.join(File.dirname(__FILE__), '..', 'config/environment'))
+
+Dir.chdir(Rails.root)
+
+
+INTERVAL = 10
+
+class QueueAnalyzer
+  
+  def self.get_empty_recieves
+    client = Aws::CloudWatch::Client.new({
+      region: 'us-west-2',
+      access_key_id: ENV['SQS_AWS_ACCESS_KEY_ID'],
+      secret_access_key: ENV['SQS_AWS_SECRET_ACCESS_KEY']
+    })
+    resp = client.get_metric_statistics({
+      namespace: "AWS/SQS",
+      metric_name: "NumberOfEmptyReceives",
+      dimensions: [{
+        name: "QueueName",
+        value: ENV['SQS_QUEUE_NAME']
+      }],
+      start_time: (Time.now - (60*5).seconds), # required
+      end_time: Time.now, # required
+      period: 60*5, # required
+      statistics: ["Sum"]
+    })
+    queue_empties = resp.datapoints[0] ? resp.datapoints[0].sum : 0
+    resp = client.get_metric_statistics({
+      namespace: "AWS/SQS",
+      metric_name: "NumberOfEmptyReceives",
+      dimensions: [{
+        name: "QueueName",
+        value: ENV['SQS_QUEUE_NAME']
+      }],
+      start_time: (Time.now - (60*5).seconds), # required
+      end_time: Time.now, # required
+      period: 60*5, # required
+      statistics: ["Sum"]
+    })
+    priority_queue_empties = resp.datapoints[0] ? resp.datapoints[0].sum : 0
+    return queue_empties + priority_queue_empties
+  end
+  
+  def self.get_count
+    (PdfGeneration.count || 0) + (PriorityPdfGeneration.count || 0)
+  end
+  
+  cattr_accessor :previous_count
+  
+  def self.seconds_to_empty
+    count = self.get_count
+    if count > 0
+      delta = (self.previous_count || 0) - count
+      self.previous_count = count
+      dequeue_per_second = delta / INTERVAL.to_f
+      if dequeue_per_second > 0
+        return [count / dequeue_per_second, count, dequeue_per_second] # E.g. 20 items at 4 items/sec is 5 secs to dequeue
+      else # It's *increasing* - definitiely increase the ttdeque_quue
+        return [999, count, dequeue_per_second]
+      end
+    else
+      return [-1, count, 0]
+    end
+  end
+end
+
+class CloudWatchPublisher
+  def self.send(seconds, count, dequeue_rate, total_empty_receives, too_many_pdf_gens)
+    t = Time.now
+    Rails.logger.debug "Should dequeue #{count} items in #{seconds} seconds."
+    cloudwatch = Aws::CloudWatch::Client.new({
+      region: 'us-west-2',
+      access_key_id: ENV['SQS_AWS_ACCESS_KEY_ID'],
+      secret_access_key: ENV['SQS_AWS_SECRET_ACCESS_KEY']
+    })
+    cloudwatch.put_metric_data({
+      namespace: "rocky_#{Rails.env}",
+      metric_data: [{
+        metric_name: "seconds_to_empty",
+        value: seconds,
+        timestamp: t,
+        unit: "Seconds"
+      },
+      {
+        metric_name: "approximate_count",
+        value: count,
+        timestamp: t
+      },
+      {
+        metric_name: "dequeue_rate",
+        value: dequeue_rate,
+        timestamp: t
+      },
+      {
+        metric_name: "enqueue_rate",
+        value: -dequeue_rate,
+        timestamp: t
+      },
+      {
+        metric_name: "total_empty_receives",
+        value: total_empty_receives,
+        timestamp: t
+      },
+      {
+        metric_name: "too_many_pdf_gens",
+        value: (too_many_pdf_gens ? 1 : 0),
+        timestamp: t
+      }]
+    })
+  end
+end
+
+loop do
+  # this will call the regular pdf gen if no priority pdfs are found
+  seconds, count, dequeue_rate = QueueAnalyzer.seconds_to_empty
+  empty_receives = QueueAnalyzer.get_empty_recieves
+  too_many_pdf_gens = count == 0 || (dequeue_rate * 10 > count)
+  
+  CloudWatchPublisher.send seconds, count, dequeue_rate, empty_receives, too_many_pdf_gens
+  sleep INTERVAL
+  # PdfGeneration.find_and_generate
+end

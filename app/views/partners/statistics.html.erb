@@ -1,0 +1,178 @@
+<% @nav_class[:statistics] = :current -%>
+<h1>Voter Application Reports</h1>
+<div class="text">
+  <p>
+    Keep track of how your voter registration tool is doing and find out who is using it.
+    <%= RockyConf.sponsor.partner_comarketing_text.html_safe %>
+  </p>
+</div>
+
+    <%= form_tag registrations_partner_path(:format => :csv), method: :post, :class=> 'form_downloadcsv' do %>
+      <fieldset>
+        <legend>Download your registration data</legend>
+        <p>Leave date fields blank if you would like to download all your registration data.</p>
+        <div class='date_input'>
+          <%= label_tag :start_date, 'Start Date' %>
+          <%= text_field_tag 'start_date', nil, placeholder: "mm/dd/yyyy" %>
+        </div>
+        <div class='date_input'>
+          <%= label_tag :end_date, 'End Date' %>
+          <%= text_field_tag 'end_date', nil, placeholder: "mm/dd/yyyy" %>
+        </div>
+        <%- if current_partner.enabled_for_grommet? %>
+          <div class='csv_type_input'>
+          <br/>
+          <br/>
+            <%= label_tag :generate_grommet, 'Generate PA App Report' %>
+            <%= check_box_tag :generate_grommet %>
+          <br/>
+          <br/>
+          </div>
+        <%- end %>
+        <div class='submit_button'>
+          <%= rollover_button "downloadcsv", "Download Registrations CSV", id: "downloadcsv"%>
+        </div>
+      </fieldset>
+    <%- end %>
+    
+    <%- if current_partner.enabled_for_grommet? %>    
+      <%= form_tag grommet_shift_report_partner_path(:format => :csv), method: :post, :class=> 'form_downloadcsv' do %>
+        <fieldset>
+          <legend>Download PA Shift Report</legend>
+          <p>Leave date fields blank if you would like to download all your registration data.</p>
+          <div class='date_input'>
+            <%= label_tag :start_date, 'Start Date' %>
+            <%= text_field_tag 'start_date', nil, placeholder: "mm/dd/yyyy" %>
+          </div>
+          <div class='date_input'>
+            <%= label_tag :end_date, 'End Date' %>
+            <%= text_field_tag 'end_date', nil, placeholder: "mm/dd/yyyy" %>
+          </div>
+          
+          <div class='submit_button' style="clear: both">
+            <%= rollover_button "downloadcsv", "Download PA Shift Report CSV", id: "downloadshiftcsv"%>
+          </div>
+        </fieldset>
+      <%- end %>
+    <%- end %>
+  
+
+<table id="statistics" cellspacing="0">
+  <tr>
+    <td id="left_column">
+      <%- if @stats_by_state %>
+      <div class="stats" id="stats_by_state">        
+        <table cellspacing="0">
+          <thead><tr><th colspan="3">Applications by State</th></tr></thead>
+          <tbody>
+            <% @stats_by_state.each do |stat| %>
+              <tr class="<%= cycle('even', 'odd') %>">
+                <th><%= stat[:state_name] %></th>
+                <td><%= stat[:registrations_count] %></td>
+                <td><%= "%.1f" % (stat[:registrations_percentage] * 100) %>%</td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+      <%- end %>
+      
+    </td>
+
+    <td id="right_column">
+      <%- if @stats_by_completion_date %>
+      <%= render :partial => 'stats_by_completion_date' %>
+      <%- end %>
+      <%- if @stats_by_completion_date_finish_with_state %>
+      <%= render :partial => 'finish_with_state_stats_by_completion_date' %>
+      <%- end %>
+      <% reset_cycle %>
+      <%- if @stats_by_race %>
+      <div class="stats" id="stats_by_race">
+        <table cellspacing="0">
+          <thead><tr><th colspan="3">Applications by Ethnicity</th></tr></thead>
+          <tbody>
+            <% @stats_by_race.each do |stat| %>
+              <tr class="<%= cycle('even', 'odd') %>">
+                <th><%= stat[:race] %></th>
+                <td><%= stat[:registrations_count] %></td>
+                <td><%= "%.1f" % (stat[:registrations_percentage] * 100) %>%</td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+      <%- end %>
+
+      <% reset_cycle %>
+      <%- if @stats_by_gender %>
+      <div class="stats" id="stats_by_gender">
+        <table cellspacing="0">
+          <thead><tr><th colspan="3">Applications by Gender</th></tr></thead>
+          <tbody>
+            <% @stats_by_gender.each do |stat| %>
+              <tr class="<%= cycle('even', 'odd') %>">
+                <th><%= stat[:gender] %></th>
+                <td><%= stat[:registrations_count] %></td>
+                <td><%= "%.1f" % (stat[:registrations_percentage] * 100) %>%</td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+      <% end %>
+      <% reset_cycle %>
+      <% if @stats_by_age%>
+      <div class="stats" id="stats_by_age">
+        <table cellspacing="0">
+          <thead><tr><th colspan="3">Applications by Age</th></tr></thead>
+          <tbody>
+            <tr class="<%= cycle('even', 'odd') %>">
+              <th>&lt; 18</th>
+              <td><%= @stats_by_age[:age_under_18][:count] %></td>
+              <td><%= "%.1f" % (@stats_by_age[:age_under_18][:percentage] * 100) %>%</td>
+            </tr>
+            <tr class="<%= cycle('even', 'odd') %>">
+              <th>18-29</th>
+              <td><%= @stats_by_age[:age_18_to_29][:count] %></td>
+              <td><%= "%.1f" % (@stats_by_age[:age_18_to_29][:percentage] * 100) %>%</td>
+            </tr>
+            <tr class="<%= cycle('even', 'odd') %>">
+              <th>30-39</th>
+              <td><%= @stats_by_age[:age_30_to_39][:count] %></td>
+              <td><%= "%.1f" % (@stats_by_age[:age_30_to_39][:percentage] * 100) %>%</td>
+            </tr>
+            <tr class="<%= cycle('even', 'odd') %>">
+              <th>40-64</th>
+              <td><%= @stats_by_age[:age_40_to_64][:count] %></td>
+              <td><%= "%.1f" % (@stats_by_age[:age_40_to_64][:percentage] * 100) %>%</td>
+            </tr>
+            <tr class="<%= cycle('even', 'odd') %>">
+              <th>65-up</th>
+              <td><%= @stats_by_age[:age_65_and_up][:count] %></td>
+              <td><%= "%.1f" % (@stats_by_age[:age_65_and_up][:percentage] * 100) %>%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <% end %>
+      <% reset_cycle %>
+      <% if @stats_by_party %>
+      <div class="stats" id="stats_by_party">
+        <table cellspacing="0">
+          <thead><tr><th colspan="3">Applications by Party</th></tr></thead>
+          <tbody>
+            <% @stats_by_party.each do |stat| %>
+              <tr class="<%= cycle('even', 'odd') %>">
+                <th><%= stat[:party] %></th>
+                <td><%= stat[:count] %></td>
+                <td><%= "%.1f" % (stat[:percentage] * 100) %>%</td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+      <% end %>
+    </td>
+  </tr>
+</table>

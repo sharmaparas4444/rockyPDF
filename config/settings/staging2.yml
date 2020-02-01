@@ -1,0 +1,102 @@
+use_https: true
+from_address:  "Rock The Vote <register@rockthevote.com>"
+pdf_host_name: 'dev.rocky.rockthevote.com'
+default_url_host: "dev.rocky.rockthevote.com"
+api_host_name: https://rtvdemo:bullwinkle@dev.rocky.rockthevote.com
+ui_url_host: "dev.rocky.rockthevote.com"
+
+
+hours_before_first_reminder: 0.0333
+hours_between_first_and_second_reminder: 0.0333
+hours_between_second_and_final_reminder: 0.0333
+pdf_expiration_days: .25
+minutes_before_abandoned: 5
+ui_timeout_minutes: 5
+
+states_with_online_registration:
+  - AZ
+  - CA
+  - DE
+  - DC
+  - LA
+  - MN
+  - NV
+  - WA
+  - AK
+  - AL
+  - CO
+  - CT
+  - FL
+  - GA
+  - HI
+  - IL
+  - IN
+  - IA
+  - KS
+  - KY
+  - MA
+  - MO
+  - NE
+  - NM
+  - NY
+  - OR
+  - PA
+  - SC
+  - TN
+  - UT
+  - VT
+  - VA
+  - WV
+
+
+ovr_states:
+  CA:
+    api_settings:
+      api_url: https://covrapitest.sos.ca.gov/PostingEntityInterfaceService.svc
+      api_key: d2DE1Nht8I
+      api_posting_entity_name: RTV
+      debug_in_ui: false
+      log_all_requests: true
+      disclosures_font_size: 12px
+      disclosures_box_height: 170px
+      web_url_base: https://covrtest.sos.ca.gov
+      disclosures_url: https://covr.cdn.sos.ca.gov/discl/
+      
+      web_agency_key: RTV
+  PA:
+    api_settings:
+      api_url: "https://fake-pa-endpoint.herokuapp.com"
+  
+  NV:
+    languages:
+      - en
+  WA:
+    languages:
+      - en
+  VA:
+    redirect_to_online_reg_url: true
+    languages:
+      - en
+    api_settings:
+        api_url: "https://fake-va-endpoint.herokuapp.com" #https://externalapi.elections.virginia.gov/sandbox/
+        api_username: "RockTheVote_Sandbox"
+        api_key: <%= ENV['VA_API_KEY'] %>
+
+  
+      
+
+enabled_locales:
+  - en
+  - es
+  - ko
+  - tl
+  - ilo
+  - hi
+  - th
+  - vi
+  - zh
+  - ja
+  - zh-tw
+  - ur
+  - bn
+  - km
