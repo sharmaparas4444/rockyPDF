@@ -216,7 +216,6 @@ class StateRegistrants::VARegistrant < StateRegistrants::Base
     self.va_submission_complete = false
     self.va_check_complete = false
     self.save
-    debugger
     self.delay.do_complete_voter_submission    
   end
   

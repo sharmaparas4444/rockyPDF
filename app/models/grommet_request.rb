@@ -27,7 +27,6 @@ class GrommetRequest < ActiveRecord::Base
   end
   
   def resubmit
-    debugger
     registrant = nil
     params = self.request_params.is_a?(Hash) ? self.request_params : YAML::load(self.request_params)
     params = params.with_indifferent_access
@@ -67,7 +66,7 @@ class GrommetRequest < ActiveRecord::Base
       :provider                 => 'AWS',
       :aws_access_key_id        => ENV['PDF_AWS_ACCESS_KEY_ID'],
       :aws_secret_access_key    => ENV['PDF_AWS_SECRET_ACCESS_KEY'],
-      :region                   => 'us-west-2'
+      :region                   => 'ca-central-1'
     })
     bucket_name = "rtv-reports"
     directory = connection.directories.get(bucket_name)
@@ -80,11 +79,10 @@ class GrommetRequest < ActiveRecord::Base
     )
     Settings.grommet_csv_ready = true
     Settings.grommet_csv_generated_at = DateTime.now
-    Settings.grommet_csv_url = "https://s3-us-west-2.amazonaws.com/rtv-reports/#{Rails.env}/grommet_requests.csv"
+    Settings.grommet_csv_url = "https://s3-ca-central-1.amazonaws.com/rtv-reports/#{Rails.env}/grommet_requests.csv"
   end
 
   def self.request_results_report_csv
-    debugger
     # Only look at registrants within the last 4 months to narrow the scope. If want full scope, go back to March 29, 2018
     distribute_reads(failover: false) do
       start_date = 4.months.ago

@@ -752,10 +752,10 @@ class Partner < ActiveRecord::Base
   end
   
   def csv_url
-    "https://s3-us-west-2.amazonaws.com/rocky-reports#{Rails.env.production? ? '' : "-#{Rails.env}"}/#{File.join(self.id.to_s, self.csv_file_name)}"    
+    "https://s3-ca-central-1.amazonaws.com/rocky-reports#{Rails.env.production? ? '' : "-#{Rails.env}"}/#{File.join(self.id.to_s, self.csv_file_name)}"    
   end
   def grommet_csv_url
-    "https://s3-us-west-2.amazonaws.com/rocky-reports#{Rails.env.production? ? '' : "-#{Rails.env}"}/#{File.join(self.id.to_s, self.grommet_csv_file_name.to_s)}"    
+    "https://s3-ca-central-1.amazonaws.com/rocky-reports#{Rails.env.production? ? '' : "-#{Rails.env}"}/#{File.join(self.id.to_s, self.grommet_csv_file_name.to_s)}"    
   end
   
   def generate_registrants_csv_file(start_date=nil, end_date = nil)
@@ -801,7 +801,7 @@ class Partner < ActiveRecord::Base
       :provider                 => 'AWS',
       :aws_access_key_id        => ENV['PDF_AWS_ACCESS_KEY_ID'],
       :aws_secret_access_key    => ENV['PDF_AWS_SECRET_ACCESS_KEY'],
-      :region                   => 'us-west-2'
+      :region                   => 'ca-central-1'
     })
     
     bucket_name = "rocky-reports#{Rails.env.production? ? '' : "-#{Rails.env}"}"
@@ -951,7 +951,7 @@ protected
 
   def check_from_email_verification
     ses = Aws::SES::Client.new(
-          region: 'us-west-2',
+          region: 'ca-central-1',
           access_key_id: ENV['SQS_AWS_ACCESS_KEY_ID'],
           secret_access_key: ENV['SQS_AWS_SECRET_ACCESS_KEY'])
     resp = ses.get_identity_verification_attributes({

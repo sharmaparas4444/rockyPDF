@@ -104,7 +104,7 @@ class PdfWriter
 
 
   def registrant_to_html_string(for_printer = false)
-    debugger
+    
     return false if self.locale.blank? || self.home_state_id.blank?
     prev_locale = I18n.locale
 
@@ -124,7 +124,7 @@ class PdfWriter
   end
 
   def generate_html(force_write = false)
-    debugger
+    
     html_string = registrant_to_html_string
     return false if !html_string
 
@@ -136,7 +136,7 @@ class PdfWriter
   end
   
   def self.write_html_from_html_string(html_string, dir, path)
-    debugger
+    
     FileUtils.mkdir_p(dir)
     File.open(path, "w") do |f|
       f << html_string.force_encoding('UTF-8')
@@ -144,7 +144,7 @@ class PdfWriter
   end
 
   def generate_pdf(force_write = false, for_printer = false)
-    debugger
+    
     html_string = registrant_to_html_string(for_printer)
     return false if !html_string
 
@@ -185,7 +185,7 @@ class PdfWriter
 
 
   def pdf_dir(pdfpre = nil, url_format=true)
-    debugger
+    
     if pdfpre
       "#{pdfpre}/#{bucket_code}"
     else
@@ -229,12 +229,13 @@ class PdfWriter
     end
     # And then upload it to s3
     uploaded = nil
+    debugger
     if for_printer
       uploaded = self.upload_pdf_to_printer(path, url_path)
     else
       uploaded = self.upload_pdf_to_s3(path, url_path)
     end
-    debugger
+    
     # If it got there, delete the tmp file
     if uploaded
       File.delete(path)
@@ -251,14 +252,16 @@ class PdfWriter
   end
   
   def self.upload_pdf_to_s3(path, url_path)
+    debugger
     connection = Fog::Storage.new({
       :provider                 => 'AWS',
       :aws_access_key_id        => ENV['AWS_ACCESS_KEY_ID'],
       :aws_secret_access_key    => ENV['AWS_SECRET_ACCESS_KEY'],
-      :region                   => 'us-west-2'
+      :region                   => 'ca-central-1'
     })
-    bucket_name = "rocky-pdfs2#{Rails.env.production? ? '' : "-#{Rails.env}"}"
+    bucket_name = "election-pdf#{Rails.env.production? ? '' : "-#{Rails.env}"}"
     directory = connection.directories.get(bucket_name)
+
     file = directory.files.create(
       :key    => url_path.gsub(/^\//,''),
       :body   => File.open(path).read,

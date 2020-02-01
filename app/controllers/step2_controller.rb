@@ -50,7 +50,6 @@ class Step2Controller < RegistrationStep
       reg[:change_of_name] = !"#{reg[:prev_first_name]}#{reg[:prev_middle_name]}#{reg[:prev_last_name]}".blank?
       
     end
-    # debugger
     super
   end
 

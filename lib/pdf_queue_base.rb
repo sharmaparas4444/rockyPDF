@@ -15,17 +15,18 @@ module PdfQueueBase
   end
   
   def queue_registrant(registrant_id)
-    debugger
+
     resp = queue.send_message({
       queue_url: queue_url, # required
       message_body: "#{self.name}::#{registrant_id}", # required
       delay_seconds: 0,
     })
-    debugger
+    
     return resp
   end
   
   def create!(options)
+    debugger
     if options[:registrant_id].blank?
       raise "Cannot create a PdfGeneration with no registrant_id in the options! #{options}"
     end
@@ -37,11 +38,14 @@ module PdfQueueBase
   end
   
   def queue
-    debugger
-    @@queue_client ||= Aws::SQS::Client.new(region: 'us-west-2',access_key_id: ENV['AWS_ACCESS_KEY_ID'],secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'])
+    
+    @@queue_client ||= Aws::SQS::Client.new(region: 'ca-central-1',access_key_id: ENV['AWS_ACCESS_KEY_ID'],secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'])
   end
   
   def retrieve_from_queue
+    puts("WHy iTS HAPPPENDing")
+    puts(queue_url)
+    puts("hello")
     resp = queue.receive_message({
       queue_url: queue_url, # required
       max_number_of_messages: 1,
@@ -98,9 +102,9 @@ module PdfQueueBase
   
   def generate(registrant_id, message)
     puts "Generate for #{self.name}"
-    debugger
+    
     r = Registrant.find(registrant_id)
-    debugger
+    
     if r && r.pdf_ready?        
       Rails.logger.warn "Tried to generate PDF for #{r.id} that was already complete"
       delete_from_queue(message)
@@ -118,7 +122,7 @@ module PdfQueueBase
   end
   
   def receive_and_generate
-    debugger
+    
     puts "Receive and generate for #{self.name}"
     registrant_id, message, klass = receive
     puts registrant_id, message, klass

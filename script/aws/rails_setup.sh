@@ -13,8 +13,8 @@ gem install bundler -v 1.16.3
 bundle install --without development test
 
 # Make sure we have the config files downloaded
-aws s3 cp s3://rocky-cloudformation-assets/database.$RAILS_ENV.yml config/database.yml --region us-west-2
-aws s3 cp s3://rocky-cloudformation-assets/.env.$RAILS_ENV .env.$RAILS_ENV --region us-west-2
+aws s3 cp s3://rocky-cloudformation-assets/database.$RAILS_ENV.yml config/database.yml --region ca-central-1
+aws s3 cp s3://rocky-cloudformation-assets/.env.$RAILS_ENV .env.$RAILS_ENV --region ca-central-1
 cat /home/ec2-user/aws_env_vars.txt >> .env.$RAILS_ENV
 
 NUM_PDF_WORKERS=3
@@ -32,7 +32,7 @@ if [ $SERVER_ROLE == 'util' ]; then
     
     # Crontab is for UTIL only
     cd ~
-    aws s3 cp s3://rocky-cloudformation-assets/crontab . --region us-west-2
+    aws s3 cp s3://rocky-cloudformation-assets/crontab . --region ca-central-1
     sed -i 's/RAILS_ENV/'"$RAILS_ENV"'/' ./crontab
     
     # Make sure the cron scripts are executable
@@ -101,7 +101,7 @@ if [ $SERVER_ROLE == 'web' ]; then
     
     # Passenger monitoring Crontab is for WEB only
     cd ~
-    aws s3 cp s3://rocky-cloudformation-assets/web-crontab . --region us-west-2
+    aws s3 cp s3://rocky-cloudformation-assets/web-crontab . --region ca-central-1
     sed -i 's/RAILS_ENV/'"$RAILS_ENV"'/' ./web-crontab
     
     # Make sure the cron scripts are executable

@@ -43,7 +43,6 @@ class RegistrationStep < ApplicationController
   end
 
   def update
-    # debugger
     redirected = find_registrant
     return if redirected == :redirected
     @registrant.attributes = params[:registrant]
@@ -146,7 +145,6 @@ class RegistrationStep < ApplicationController
   end
 
   def find_partner
-    # debugger
     @partner = Partner.find_by_id(params[:partner]) || Partner.find(Partner::DEFAULT_ID)
     @partner_id = @partner.id
     set_params

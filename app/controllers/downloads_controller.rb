@@ -60,7 +60,6 @@ class DownloadsController < RegistrationStep
   end
   
   def pdf_assistance
-    debugger
     find_registrant(:download)
     @registrant.queue_pdf_delivery
     # Render because we just assume it'll go through

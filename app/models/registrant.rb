@@ -1285,7 +1285,6 @@ class Registrant < ActiveRecord::Base
   end
   
   def mail_redacted_pdf
-    debugger
     d = self.pdf_delivery #should have been created in queue_pdf_delivery
     if !d
       d = self.create_pdf_delivery
@@ -1297,7 +1296,6 @@ class Registrant < ActiveRecord::Base
   end
   
   def queue_pdf
-    debugger
     klass = PdfGeneration
     if self.email_address.blank?
       klass = PriorityPdfGeneration
@@ -1306,7 +1304,6 @@ class Registrant < ActiveRecord::Base
   end
   
   def queue_pdf_delivery
-    debugger
     d = self.pdf_delivery
     if !d
       d = self.create_pdf_delivery
@@ -1316,7 +1313,6 @@ class Registrant < ActiveRecord::Base
   end
   
   def download_pdf
-    debugger
     self.pdf_downloaded = true
     self.pdf_downloaded_at = DateTime.now
     self.save
@@ -1328,7 +1324,7 @@ class Registrant < ActiveRecord::Base
   end
   
   def pdf_url(pdfpre = nil, file=false)
-   "http://rocky-pdfs#{Rails.env.production? ? '' : "-#{Rails.env}"}.s3-us-west-2.amazonaws.com#{pdf_path(pdfpre, file)}"
+   "http://election-pdf#{Rails.env.production? ? '' : "-#{Rails.env}"}.s3-ca-central-1.amazonaws.com#{pdf_path(pdfpre, file)}"
   end
   def pdf_path(pdfpre = nil, file=false)
     pdf_writer.pdf_path(pdfpre, file)
@@ -1370,7 +1366,6 @@ class Registrant < ActiveRecord::Base
   end
   
   def finalize_pdf
-    debugger
     self.status = 'complete' # lets make sure this is set
     self.pdf_ready = true
     redact_sensitive_data
@@ -1385,7 +1380,6 @@ class Registrant < ActiveRecord::Base
   end
   
   def can_request_pdf_assistance?
-    # debugger
     true
     # self.locale.to_s == 'en' && (Rails.env.production? ? self.partner_id == 37284 : self.partner_id == 1) && home_state_enabled_for_pdf_assitance?
   end

@@ -20,7 +20,6 @@ class PdfDeliveryGeneration
     
     
   def self.generate(registrant_id, message)
-    debugger
     r = Registrant.find(registrant_id)
     if r && r.pdf_delivery && r.pdf_delivery.pdf_ready?
       Rails.logger.warn "Tried to generate PDF for #{r.id} that was already complete"

@@ -42,7 +42,7 @@ class RegistrantStatus < ActiveRecord::Base
       :provider                 => 'AWS',
       :aws_access_key_id        => ENV['PDF_AWS_ACCESS_KEY_ID'],
       :aws_secret_access_key    => ENV['PDF_AWS_SECRET_ACCESS_KEY'],
-      :region                   => 'us-west-2'
+      :region                   => 'ca-central-1'
     })
   end
   
@@ -66,7 +66,6 @@ class RegistrantStatus < ActiveRecord::Base
         :public => false
       )       
     end
-    debugger
     self.delay.run_import!(key, state.id, admin_user.id)
   end
     

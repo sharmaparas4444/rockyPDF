@@ -29,7 +29,6 @@ class Api::V3::RegistrationsController < Api::V3::BaseController
 
   # Lists registrations
   def index
-    debugger
     query = {
       :partner_id       => params[:partner_id],
       :partner_api_key  => params[:partner_API_key],
@@ -44,7 +43,6 @@ class Api::V3::RegistrationsController < Api::V3::BaseController
   end
 
   def index_gpartner
-    debugger
     query = {
       :gpartner_id       => params[:gpartner_id],
       :gpartner_api_key  => params[:gpartner_API_key],
@@ -61,7 +59,6 @@ class Api::V3::RegistrationsController < Api::V3::BaseController
   # Creates the record and returns the URL to the PDF file or
   # the error message with optional invalid field name.
   def create
-    debugger
     r = V3::RegistrationService.create_record(params[:registration])
     jsonp :pdfurl => "https://#{RockyConf.pdf_host_name}#{r.pdf_download_path}", :uid=>r.uid
   rescue V3::RegistrationService::ValidationError => e
@@ -77,7 +74,6 @@ class Api::V3::RegistrationsController < Api::V3::BaseController
 
   # Creates the record
   def create_finish_with_state
-    debugger
     result = V3::RegistrationService.create_record(params[:registration], true)
     jsonp :registrations => result.to_finish_with_state_array
   rescue V3::RegistrationService::ValidationError => e
@@ -90,7 +86,6 @@ class Api::V3::RegistrationsController < Api::V3::BaseController
   end
 
   def clock_in
-    debugger
     data = params.deep_dup
     data.delete(:debug_info)
     data.delete(:format)
@@ -103,7 +98,6 @@ class Api::V3::RegistrationsController < Api::V3::BaseController
   end
 
   def clock_out
-    debugger
     data = params.deep_dup
     data.delete(:debug_info)
     data.delete(:format)
@@ -116,7 +110,6 @@ class Api::V3::RegistrationsController < Api::V3::BaseController
   end
 
   def create_pa
-    debugger
     registrant = nil
     params.delete(:debug_info)
     
@@ -137,7 +130,6 @@ class Api::V3::RegistrationsController < Api::V3::BaseController
       
       if gr.is_duplicate?
         # Send notification
-        debugger
         AdminMailer.grommet_duplication(gr).deliver
         return pa_success_result
       end
@@ -192,7 +184,6 @@ class Api::V3::RegistrationsController < Api::V3::BaseController
   end
 
   def pa_success_result
-    debugger
     data = {
         registration_success: true,
         errors: []
@@ -209,7 +200,6 @@ class Api::V3::RegistrationsController < Api::V3::BaseController
         transaction_id: nil,
         errors: errors
     }
-    debugger
     Rails.logger.warn("Grommet Registration Error for params:\n#{params}\n\nErrors:\n#{errors}")
     AdminMailer.grommet_registration_error(errors, registrant).deliver
 
@@ -218,7 +208,6 @@ class Api::V3::RegistrationsController < Api::V3::BaseController
 
   def pdf_ready
 
-    debugger
     query = {
       :UID              => params[:UID]
     }
@@ -234,7 +223,6 @@ class Api::V3::RegistrationsController < Api::V3::BaseController
   end
 
   def stop_reminders
-    debugger
     query = {
       :UID              => params[:UID]
     }

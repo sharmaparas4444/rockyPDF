@@ -151,7 +151,6 @@ class StateRegistrants::PARegistrant < StateRegistrants::Base
   def async_submit_to_online_reg_url
     self.pa_submission_complete = false
     self.save
-    debugger
     self.delay.submit_to_online_reg_url
   end
  

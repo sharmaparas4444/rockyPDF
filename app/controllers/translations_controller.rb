@@ -107,7 +107,6 @@ private
   def submit_data(file, group_name, locale)
     # later this will be 'email'
     #Send an email
-    debugger
     ConfigMailer.translation_file(file, "#{group_name}-#{locale}.yml").deliver
     #send_data file.to_s, :filename=>"#{group_name}-#{locale}.yml", :type=>"text"
   end

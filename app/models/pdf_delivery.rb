@@ -20,20 +20,21 @@ class PdfDelivery < ActiveRecord::Base
   end
   
   def finalize_pdf
-    debugger
     self.pdf_ready = true
     save(validate: false)
   end
   
   
   def self.store_in_s3(path, url_path)
+    debugger
     connection = Fog::Storage.new({
       :provider                 => 'AWS',
       :aws_access_key_id        => ENV['AWS_ACCESS_KEY_ID'],
       :aws_secret_access_key    => ENV['AWS_SECRET_ACCESS_KEY'],
-      :region                   => 'us-west-2'
+      :region                   => 'ca-central-1'
     })
-    bucket_name = "rocky-pdfs#{Rails.env.production? ? '' : "-#{Rails.env}"}"
+    bucket_name = "election-pdf#{Rails.env.production? ? '' : "-#{Rails.env}"}"
+    debugger
     directory = connection.directories.get(bucket_name)
     date_stamp = Date.today.strftime("%Y-%m-%d")
     file = directory.files.create(
@@ -43,11 +44,9 @@ class PdfDelivery < ActiveRecord::Base
       :encryption => 'AES256', #Make sure its encrypted on their own hard drives
       :public => true
     ) 
-    debugger
   rescue Exception=>e
     debugger
     raise e
-    
     return false   
   end
   

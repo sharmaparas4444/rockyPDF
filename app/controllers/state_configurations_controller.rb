@@ -37,7 +37,6 @@ protected
   end
   
   def submit_data(file)
-    debugger
     # later this will be 'email'
     #send_data file, :filename=>"new_states.yml", :type=>"text"
     ConfigMailer.state_config_file(file, "updated-states.yml").deliver
