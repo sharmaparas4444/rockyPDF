@@ -105,7 +105,7 @@ end
   gem 'uglifier'
 
 gem "nokogiri", ">= 1.8.5"
-gem "mechanize", "= 2.7.1"
+gem "mechanize", "2.7.7"
 gem "ledermann-rails-settings", "~> 2.4", :require => "rails-settings"
 
 gem 'json'
